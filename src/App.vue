@@ -20,6 +20,8 @@
         >
         Femmes
       </label>
+      <input type="text" v-model="search" placeholder="Rechercher"/>
+    <pre>il y a {{searchedUsers.length}} resultats</pre>
     <tr>
         <th></th>
         <th>Nom</th>
@@ -30,7 +32,7 @@
     </tr>
     </thead>
     <tbody id="tbody-users" v-if="users">
-      <tr v-for="user in usersFiltered" :key="user.email">
+      <tr v-for="user in searchedUsers" :key="user.email">
           <td><img :src="user.picture.thumbnail"></td>
           <td>{{ user.name.first }} {{ user.name.last }}</td>
           <td>{{ user.email }}</td>
@@ -58,6 +60,7 @@ export default {
       tableau: true,
       errored: false,
       genderFilter: ['male', 'female'],
+      search: '',
     }
   },
   methods: {
@@ -88,7 +91,17 @@ export default {
     usersFiltered() {
       return this.users.filter((user) => this.genderFilter.includes(user.gender));
                 
-    }
+    },
+    searchedUsers() {
+
+      return this.usersFiltered.filter((user) => {
+        if (user.name.first.toLowerCase().match(this.search)){
+        return user.name.first.toLowerCase().match(this.search);
+        } else if (user.name.last.toLowerCase().match(this.search)){
+        return user.name.last.toLowerCase().match(this.search);
+        }
+      })
+    },
   }
 }
 

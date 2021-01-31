@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <div id="test">
         <div>
-            <h1>Vue example</h1>
+            <h1>Vue app filter v1</h1>
             <hr/>
             
             
