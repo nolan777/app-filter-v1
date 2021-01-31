@@ -1,4 +1,4 @@
-# my-first-vue
+# app-filter-v1
 
 ## Project setup
 ```
