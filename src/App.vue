@@ -21,6 +21,13 @@
         Femmes
       </label>
       <input type="text" v-model="search" placeholder="Rechercher"/>
+      <label for="">Trier par âge :
+        <select v-model="sortDirection" name="direction" id="srt">
+          <option value="">Défaut</option>
+          <option value="asc">Décroissant</option>
+          <option value="desc">Croissant</option>
+        </select>
+      </label>
     <pre>il y a {{searchedUsers.length}} resultats</pre>
     <tr>
         <th></th>
@@ -28,7 +35,9 @@
         <th>Email</th>
         <th>Tel</th>
         <th>Genre</th>
-        <th> Âge</th>
+        <th v-on:click="changeSort"> Âge
+          <i v-if="sortDirection === 'asc' || sortDirection === 'desc'" class="fa" v-bind:class="[ sortDirection == 'asc' ? sortup : sortdown ]"></i>
+        </th>
     </tr>
     </thead>
     <tbody id="tbody-users" v-if="users">
@@ -61,6 +70,9 @@ export default {
       errored: false,
       genderFilter: ['male', 'female'],
       search: '',
+      sortDirection: '',
+      sortup: 'fa-sort-up',
+      sortdown: 'fa-sort-down'
     }
   },
   methods: {
@@ -85,7 +97,18 @@ export default {
           console.log(error)
           this.errored = true
         })
-    }
+    },
+    changeSort() {
+      if (this.sortDirection == ''){
+        this.sortDirection = 'asc'
+      }else if (this.sortDirection == 'asc'){
+        this.sortDirection = 'desc'
+        this.users = this.users.sort((a,b) => a[this.users[1].dob.age] > b[this.users[2].dob.age] ? 1 : -1 )
+      } else if (this.sortDirection == 'desc'){
+        this.sortDirection = ''
+        this.users = this.users.sort((a,b) => a[this.users[1].dob.age] < b[this.users[2].dob.age] ? 1 : -1 )
+      }
+    },
   },
   computed: {
     usersFiltered() {
