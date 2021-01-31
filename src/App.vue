@@ -62,10 +62,21 @@ export default {
   },
   methods: {
     fetchUsers() {
+      if (this.users == '')
       axios
         .get('https://randomuser.me/api/?results=20')
         .then(response => {
           this.users = response.data.results
+        })
+        .catch(error => {
+          console.log(error)
+          this.errored = true
+        })
+      else 
+      axios
+        .get('https://randomuser.me/api/?results=20')
+        .then(response => {
+         this.users.push.apply(this.users, response.data.results)
         })
         .catch(error => {
           console.log(error)
