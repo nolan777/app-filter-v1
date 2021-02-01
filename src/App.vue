@@ -1,43 +1,43 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <DispUsers msg="Welcome to Your Vue.js App" />
-  <table id="tbl-users" class="table table-hover">
-    <thead>
-      <button id="fetch-users" class="btn btn-primary" v-on:click="fetchUsers">Réupérer les utilisateurs</button>
-      <label>
-      <input
-        v-model="genderFilter"
-        type="checkbox"
-        value="male"
-      >
-        Hommes
-      </label>
-      <label>
+      <div class="headt">
+        <button id="fetch-users" class="btn btn-primary" v-on:click="fetchUsers">Réupérer des utilisateurs</button>
+        <label>
         <input
           v-model="genderFilter"
           type="checkbox"
-          value="female"
+          value="male"
         >
-        Femmes
-      </label>
-      <input type="text" v-model="search" placeholder="Rechercher"/>
-      <label for="">Trier par âge :
-        <select v-model="sortDirection" name="direction" id="srt">
-          <option value="">Défaut</option>
-          <option value="asc">Décroissant</option>
-          <option value="desc">Croissant</option>
-        </select>
-      </label>
-    <pre>il y a {{searchedUsers.length}} resultats</pre>
-    <tr>
-        <th></th>
+          Hommes
+        </label>
+        <label>
+          <input
+            v-model="genderFilter"
+            type="checkbox"
+            value="female"
+          >
+          Femmes
+        </label>
+        <input type="text" v-model="search" placeholder="Rechercher"/>
+        <label for="">Trier par âge :          
+        </label>
+        <p v-if="sortDirection === ''"> Par défaut</p>
+        <p v-if="sortDirection === 'asc'"> Décroissant</p>
+        <p v-if="sortDirection === 'desc'"> Croissant</p>
+      </div>
+    <p>il y a <strong>{{searchedUsers.length}}</strong> utilisateurs</p>
+    <table id="tbl-users" class="table table-hover">
+    <thead>
+    <tr class="">
+        <th>Photo</th>
         <th>Nom</th>
         <th>Email</th>
         <th>Tel</th>
         <th>Genre</th>
-        <th v-on:click="changeSort"> Âge
+        <th v-on:click="changeSort"> <a class="btn btn-light"> Âge
           <i v-if="sortDirection === 'asc' || sortDirection === 'desc'" class="fa" v-bind:class="[ sortDirection == 'asc' ? sortup : sortdown ]"></i>
-        </th>
+        </a></th>
     </tr>
     </thead>
     <tbody id="tbody-users" v-if="users">
@@ -138,5 +138,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.headt{
+  display: flex;
+  justify-content: space-around;
+}
+.btn-primary{
+  background-color: #41B883!important;
+  border-color: #41B883!important;
+}
+.btn-primary:hover{
+  background-color: #35495E!important;
 }
 </style>
