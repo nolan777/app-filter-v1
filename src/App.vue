@@ -103,10 +103,10 @@ export default {
         this.sortDirection = 'asc'
       }else if (this.sortDirection == 'asc'){
         this.sortDirection = 'desc'
-        this.users = this.users.sort((a,b) => a[this.users[1].dob.age] > b[this.users[2].dob.age] ? 1 : -1 )
+        this.users = this.users.sort((a,b) => a.dob.age > b.dob.age ? 1 : -1 )
       } else if (this.sortDirection == 'desc'){
         this.sortDirection = ''
-        this.users = this.users.sort((a,b) => a[this.users[1].dob.age] < b[this.users[2].dob.age] ? 1 : -1 )
+        this.users = this.users.sort((a,b) => a.dob.age < b.dob.age ? 1 : -1 )
       }
     },
   },
