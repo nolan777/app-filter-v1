@@ -1,46 +1,50 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
   <DispUsers msg="Welcome to Your Vue.js App" />
-      <div class="headt">
-        <button id="fetch-users" class="btn btn-primary" v-on:click="fetchUsers">Réupérer des utilisateurs</button>
-        <label>
-        <input
-          v-model="genderFilter"
-          type="checkbox"
-          value="male"
-        >
-          Hommes
-        </label>
-        <label>
-          <input
-            v-model="genderFilter"
-            type="checkbox"
-            value="female"
-          >
-          Femmes
-        </label>
-        <input type="text" v-model="search" placeholder="Rechercher"/>
-        <label for="">Trier par âge :          
-        </label>
-        <p v-if="sortDirection === ''"> Par défaut</p>
-        <p v-if="sortDirection === 'asc'"> Décroissant</p>
-        <p v-if="sortDirection === 'desc'"> Croissant</p>
-      </div>
-    <p>il y a <strong>{{searchedUsers.length}}</strong> utilisateurs</p>
-    <table id="tbl-users" class="table table-hover">
-    <thead>
-    <tr class="">
+  <div class="headt">
+    <button class="btn btn-primary" v-on:click="fetchUsers">Réupérer des utilisateurs</button>
+    <label>
+      <input
+        v-model="genderFilter"
+        type="checkbox"
+        value="male"
+      >
+      Hommes
+    </label>
+    <label>
+      <input
+        v-model="genderFilter"
+        type="checkbox"
+        value="female"
+      >
+      Femmes
+    </label>
+    <label>
+      Rechercher :
+      <input type="text" v-model="search" placeholder="Rechercher"/>
+    </label>  
+    <label>Trier par âge :          
+    </label>
+    <p v-if="sortDirection === ''">Par défaut</p>
+    <p v-if="sortDirection === 'asc'">Croissant</p>
+    <p v-if="sortDirection === 'desc'">Décroissant</p>
+  </div>
+  <p v-if="users.length">il y a <strong>{{searchedUsers.length}}</strong> utilisateurs</p>
+  <p v-else >il n'y a <strong>aucun</strong> utilisateur</p>
+  <table class="table table-hover" v-if="users.length">
+  <thead>
+    <tr>
         <th>Photo</th>
         <th>Nom</th>
         <th>Email</th>
         <th>Tel</th>
         <th>Genre</th>
-        <th v-on:click="changeSort"> <a class="btn btn-light"> Âge
-          <i v-if="sortDirection === 'asc' || sortDirection === 'desc'" class="fa" v-bind:class="[ sortDirection == 'asc' ? sortup : sortdown ]"></i>
-        </a></th>
+        <th> <button v-on:click="changeSort" class="btn btn-light"> Âge
+          <i v-if="sortDirection" class="fa" v-bind:class="[ sortDirection === 'asc' ? 'fa-sort-up' : 'fa-sort-down' ]"></i>
+        </button></th>
     </tr>
     </thead>
-    <tbody id="tbody-users" v-if="users">
+    <tbody>
       <tr v-for="user in searchedUsers" :key="user.email">
           <td><img :src="user.picture.thumbnail"></td>
           <td>{{ user.name.first }} {{ user.name.last }}</td>
@@ -64,68 +68,55 @@ export default {
   },
   data() {
     return {
-      fkey: "gender",
       users: [],
-      tableau: true,
       errored: false,
       genderFilter: ['male', 'female'],
       search: '',
-      sortDirection: '',
-      sortup: 'fa-sort-up',
-      sortdown: 'fa-sort-down'
+      sortDirection: ''
     }
   },
+  
   methods: {
-    fetchUsers() {
-      if (this.users == '')
+    fetchUsers() { 
       axios
         .get('https://randomuser.me/api/?results=20')
         .then(response => {
-          this.users = response.data.results
+         this.users = [...this.users, ...response.data.results]
+         //this.users = this.users.concat(response.data.results)
         })
         .catch(error => {
-          console.log(error)
-          this.errored = true
-        })
-      else 
-      axios
-        .get('https://randomuser.me/api/?results=20')
-        .then(response => {
-         this.users.push.apply(this.users, response.data.results)
-        })
-        .catch(error => {
-          console.log(error)
+          console.error(error)
           this.errored = true
         })
     },
     changeSort() {
-      if (this.sortDirection == ''){
+      if (this.sortDirection === ''){
         this.sortDirection = 'asc'
-      }else if (this.sortDirection == 'asc'){
+        return this.users
+      }else if (this.sortDirection === 'asc'){
         this.sortDirection = 'desc'
-        this.users = this.users.sort((a,b) => a.dob.age > b.dob.age ? 1 : -1 )
-      } else if (this.sortDirection == 'desc'){
+      } else if (this.sortDirection === 'desc'){
         this.sortDirection = ''
-        this.users = this.users.sort((a,b) => a.dob.age < b.dob.age ? 1 : -1 )
       }
     },
   },
   computed: {
-    usersFiltered() {
-      return this.users.filter((user) => this.genderFilter.includes(user.gender));
-                
-    },
     searchedUsers() {
-
-      return this.usersFiltered.filter((user) => {
-        if (user.name.first.toLowerCase().match(this.search)){
-        return user.name.first.toLowerCase().match(this.search);
-        } else if (user.name.last.toLowerCase().match(this.search)){
-        return user.name.last.toLowerCase().match(this.search);
-        }
+      return this.users
+      .filter((user) => this.genderFilter.includes(user.gender))
+      .filter((user) => {
+        return (user.name.first.toLowerCase().includes(this.search.toLowerCase())) ||
+        (user.name.last.toLowerCase().includes(this.search.toLowerCase()))
+      })
+      .sort((a,b) => {
+        if (!this.sortDirection) return 0;
+        const  modifier = this.sortDirection === 'desc' ? -1 : 1;
+        return (a.dob.age - b.dob.age) * modifier;
       })
     },
-  }
+  },
+  created(){ this.fetchUsers()},
+  
 }
 
 </script>
