@@ -1,14 +1,13 @@
 <template>
   <div class="container-fluid">
     <div id="test">
-        <div>
-            <h1>Vue app filter v1</h1>
-            <hr/>
+      <div>
+        <h1>Vue app filter v1</h1>
+        <hr>
             
             
-            <p id="nb-users"></p>
-        </div>
-        
+        <p id="nb-users" />
+      </div>
     </div>
   </div>
 </template>
@@ -16,13 +15,13 @@
 <script>
 export default {
   name: 'DispUsers',
+  props: {
+    msg: String
+  },
   data() {
     return {
       users: null
     }
-  },
-  props: {
-    msg: String
   }
 }
 </script>
