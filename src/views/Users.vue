@@ -2,6 +2,7 @@
   <DispUsers msg="Welcome to Your Vue.js App" />
   <div class="headt">
     <button class="btn btn-primary" v-on:click="fetchUsers">Récupérer des utilisateurs</button>
+    <button class="btn btn-primary" @click="changeLocation()" >Ajouter un utilisateur</button>
     <label>
       <input
         v-model="genderFilter"
@@ -49,7 +50,7 @@
     <tbody>
       <tr v-for="user in searchedUsers" :key="user.id">
         <td><img :src="user.avatarUrl" width="100"></td>
-        <td>{{ user.firstName }} {{ user.lastName }} <router-link :to="{name : 'User', params:{id: user.id} }">éditer</router-link></td>
+        <td>{{ user.firstName }} {{ user.lastName }} <router-link :to="{name : 'User', params:{id: user.id} }">éditer</router-link> <button class="btn" @click="handleDelete(user.id), reloadLocation()">Supprimer</button></td>
         <td>{{ user.email }}</td>
         <td>{{ user.tel }}</td>
         <td>{{ user.gender }}</td>
@@ -119,6 +120,15 @@ export default {
         this.genderFilter = ['male','female'],
         this.search = '',
         this.sortDirection = ''
+    },
+    changeLocation() {
+      window.location.replace('/users/add');
+    },
+    async handleDelete(id) {
+      await axios.delete(`http://localhost:8010/users/${id}`);
+    },
+    reloadLocation() {
+      window.location.reload();
     }
   },
   computed: {
@@ -149,10 +159,10 @@ export default {
       }
   },
   mounted() {
-      console.log(this.users)
+    console.log(this.users)
       
-  }
-  //created(){ this.fetchUsers()},
+  },
+  created(){ this.fetchUsers()},
   
 }
 
@@ -177,5 +187,8 @@ export default {
 }
 .btn-primary:hover{
   background-color: #35495E!important;
+}
+.btn:hover{
+  background-color: #41B883!important
 }
 </style>
