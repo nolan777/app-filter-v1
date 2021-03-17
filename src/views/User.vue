@@ -1,39 +1,30 @@
 <template>
-  <div class="headt">
-    <p>Bonjour utilisateur {{this.$route.params.id}}</p>
-    <pre>{{user}}</pre>
+  <div>
+    <button class="btn btn-primary" @click="back">Retour</button>
   </div>
-  <table class="table table-hover" v-if="user">
-  <thead>
-    <tr>
-        <th>Photo</th>
-        <th>Nom</th>
-        <th>Email</th>
-        <th>Tel</th>
-        <th>Genre</th>
-        <th>Âge</th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr :key="user.id">
-        <td><img :src="user.avatarUrl" width="100"></td>
-        <td>{{ user.firstName }} {{ user.lastName }}</td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.tel }}</td>
-        <td>{{ user.gender }}</td>
-        <td>{{ user.age }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <div class="headt">
+    <p>Modifier l'utilisateur {{user.firstName}}</p>
+  </div>
+  <div class="profil card carte">
+    <img class="img-fluid image" :src="user.avatarUrl" width="200" alt="avatar">
+    <h3>{{user.lastName}} {{user.firstName}}</h3>
+    <p>{{user.email}}</p>
+    <p>{{user.tel}}</p>
+    <p>{{user.age}} ans</p>
+    <Form :user="user"/>
+  </div>
+  
+  
 </template>
 
 <script>
+import Form from "../components/form/Form.vue"
 import axios from 'axios'
 
 export default {
-  name: 'Users',
+  name: 'User',
   components: {
-    
+    Form
   },
   data() {
     return {
@@ -43,24 +34,22 @@ export default {
   },
   
   methods: {
-    fetchUsers() { 
+    fetchUser() { 
       axios
-        .get('http://localhost:8010/users/$(this.$route.params.id)')
-        .then(response => {
-         this.user = response.data
-         //this.users = this.users.concat(response.data.results)
-        })
+        .get(`http://localhost:8010/users/${this.$route.params.id}`)
+        .then(response => this.user = response.data)
         .catch(error => {
           console.error(error)
           this.errored = true
         })
     },
-  },
-  mounted() {
-      console.log(this.users)
-      
-  }
-  //created(){ this.fetchUsers()},
+    back(){
+      this.$router.go(-1);
+    },
+  },  
+  created(){
+    this.fetchUser();
+    }
   
 }
 
@@ -85,5 +74,19 @@ export default {
 }
 .btn-primary:hover{
   background-color: #35495E!important;
+}
+.carte{
+  padding: 3%;
+  width: 50%;
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+}
+.image {
+  border-radius: 20px;
+  margin-bottom: 5%;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
