@@ -1,20 +1,28 @@
 <template>
   <div>
-    <button class="btn btn-primary" @click="back">Retour</button>
+    <button
+      class="btn btn-primary"
+      @click="back"
+    >
+      Retour
+    </button>
   </div>
   <div class="headt">
-    <p>Modifier l'utilisateur {{user.firstName}}</p>
+    <p>Modifier l'utilisateur {{ user.firstName }}</p>
   </div>
   <div class="profil card carte">
-    <img class="img-fluid image" :src="user.avatarUrl" width="200" alt="avatar">
-    <h3>{{user.lastName}} {{user.firstName}}</h3>
-    <p>{{user.email}}</p>
-    <p>{{user.tel}}</p>
-    <p>{{user.age}} ans</p>
-    <Form :user="user"/>
+    <img
+      class="img-fluid image"
+      :src="user.avatarUrl"
+      width="200"
+      alt="avatar"
+    >
+    <h3>{{ user.lastName }} {{ user.firstName }}</h3>
+    <p>{{ user.email }}</p>
+    <p>{{ user.tel }}</p>
+    <p>{{ user.age }} ans</p>
+    <Form :user="user" />
   </div>
-  
-  
 </template>
 
 <script>
@@ -31,12 +39,15 @@ export default {
       user: {},
       errored: false,
     }
-  },
+  },  
+  created(){
+    this.fetchUser();
+    },
   
   methods: {
     fetchUser() { 
       axios
-        .get(`http://localhost:8010/users/${this.$route.params.id}`)
+        .get(`http://localhost:3000/users/${this.$route.params.id}`)
         .then(response => this.user = response.data)
         .catch(error => {
           console.error(error)
@@ -46,10 +57,7 @@ export default {
     back(){
       this.$router.go(-1);
     },
-  },  
-  created(){
-    this.fetchUser();
-    }
+  }
   
 }
 
