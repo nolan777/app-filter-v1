@@ -1,9 +1,13 @@
 <template>
-    <label>
-        {{label}}
-        <input class="form-control inputs" @input="$emit('update:name', $event.target.value)" type="text" :value="name">
-    </label>
-    
+  <label>
+    {{ label }}
+    <input
+      class="form-control inputs"
+      type="text"
+      :value="name"
+      @input="$emit('update:name', $event.target.value)"
+    >
+  </label>
 </template>
 
 <script>

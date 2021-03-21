@@ -1,23 +1,49 @@
 <template>
   <p v-if="message">
-        {{message}}
+    {{ message }}
   </p>
-  <form class="form-group formulaire" @submit.prevent="handleSubmit">
-      <InputText label="Nom" v-model:name="userLastName" />
-      <InputText label="Prenom" v-model:name="userFirstName" />
-      <label>
-        Date de naissance
-        <input class="form-control inputs" type="date" v-model="userBirthDate"/>
-      </label>
+  <form
+    class="form-group formulaire"
+    @submit.prevent="handleSubmit"
+  >
+    <InputText
+      v-model:name="userLastName"
+      label="Nom"
+    />
+    <InputText
+      v-model:name="userFirstName"
+      label="Prenom"
+    />
+    <label>
+      Date de naissance
+      <input
+        v-model="userBirthDate"
+        class="form-control inputs"
+        type="date"
+      >
+    </label>
       
-      <div>
-        <select class="form-control inputs" v-model="userGender" name="gender">
-          <option value="male">Homme</option>
-          <option value="female">Femme</option>
-        </select>
-      </div>
-      <InputText label="Email" v-model:name="userEmail" />
-      <button class="btn btn-primary bouton">Sauvegarder</button>
+    <div>
+      <select
+        v-model="userGender"
+        class="form-control inputs"
+        name="gender"
+      >
+        <option value="male">
+          Homme
+        </option>
+        <option value="female">
+          Femme
+        </option>
+      </select>
+    </div>
+    <InputText
+      v-model:name="userEmail"
+      label="Email"
+    />
+    <button class="btn btn-primary bouton">
+      Sauvegarder
+    </button>
   </form>
 </template>
 
@@ -40,6 +66,16 @@ export default {
       userGender: '',
     }
   },
+  watch: {
+    user: function(newVal) {
+      this.userFirstName = newVal.firstName;
+      this.userLastName = newVal.lastName;
+      this.userBirthDate = newVal.birthDate;
+      this.userGender = newVal.gender;
+      this.userEmail = newVal.email;
+      this.userAvatarUrl = newVal.avatarUrl;
+    }
+  },
   methods: {
     async handleSubmit() {
       const data = {
@@ -51,25 +87,15 @@ export default {
         avatarUrl: this.userAvatarUrl,
       };     
       
-      const response = await axios.put(`http://localhost:8010/users/${this.$route.params.id}`, data);
+      const response = await axios.put(`http://localhost:3000/users/${this.$route.params.id}`, data);
 
       if (response.data.errmessage) {
         alert(response.data.errmessage)
       } else {
         alert('Modifications enregistrées');
-        window.location.replace('/users');
+        this.$router.push('/users');
       }
       
-    }
-  },
-  watch: {
-    user: function(newVal) {
-      this.userFirstName = newVal.firstName;
-      this.userLastName = newVal.lastName;
-      this.userBirthDate = newVal.birthDate;
-      this.userGender = newVal.gender;
-      this.userEmail = newVal.email;
-      this.userAvatarUrl = newVal.avatarUrl;
     }
   }
 

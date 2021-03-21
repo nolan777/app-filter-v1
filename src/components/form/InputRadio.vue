@@ -1,9 +1,13 @@
 <template>
-    <label>
-        {{label}}
-        <input type="checkbox" @input="$emit('update:option', [$event.target.value])" :value="option" :name="name">
-    </label>
-    
+  <label>
+    {{ label }}
+    <input
+      type="checkbox"
+      :value="option"
+      :name="name"
+      @input="$emit('update:option', [$event.target.value])"
+    >
+  </label>
 </template>
 
 <script>
