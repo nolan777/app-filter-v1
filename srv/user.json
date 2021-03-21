@@ -1,0 +1,81 @@
+[
+    {
+        "id": 5,
+        "lastName": "CÔTE",
+        "firstName": "Yoann",
+        "email": "yoann.cote@my-digital-school.org",
+        "birthDate": "1999-01-01",
+        "gender": "male",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/cote_yoann.jpg",
+        "age": 22
+    },
+    {
+        "id": 6,
+        "lastName": "GEROUDET-RASTOIX",
+        "firstName": "Gabrielle",
+        "email": "gabrielle.geroudet-rastoix@my-digital-school.org",
+        "birthDate": "2000-03-11",
+        "gender": "female",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/geroudet-rastoix_gabrielle.jpg",
+        "age": 21
+    },
+    {
+        "id": 7,
+        "lastName": "MARTIN",
+        "firstName": "Antoine",
+        "email": "antoine.martin@y-digital-school.org",
+        "birthDate": "1995-12-14",
+        "gender": "male",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/martin_antoine.jpg",
+        "age": 25
+    },
+    {
+        "id": 4,
+        "lastName": "BRETTON",
+        "firstName": "Jordan",
+        "email": "jordan.bretton@my-digital-school.org",
+        "birthDate": "1996-08-12",
+        "gender": "male",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/bretton_jordan.jpg",
+        "age": 24
+    },
+    {
+        "id": 2,
+        "lastName": "ARQUILLIERE",
+        "firstName": "Emilie",
+        "email": "emilie.arquilliere@my-digital-school.org",
+        "birthDate": "1999-03-07",
+        "gender": "female",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/arquilliere_emilie.jpg",
+        "age": 22
+    },
+    {
+        "id": 1,
+        "lastName": "GALLEGO",
+        "firstName": "Chloé",
+        "email": "chloe.gallego-pelegrin@my-digital-school.org",
+        "birthDate": "2000-01-15",
+        "gender": "female",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/gallego-pelegrin_chloe.jpg",
+        "age": 21
+    },
+    {
+        "id": 3,
+        "lastName": "BIQUE",
+        "firstName": "Florian",
+        "email": "florian.bique@my-digital-school.org",
+        "birthDate": "1998-03-14",
+        "gender": "male",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_dev/bique_florian.jpg",
+        "age": 23
+    },
+    {
+        "id": 8,
+        "lastName": "DUCARRE",
+        "firstName": "Alexandres",
+        "email": "alexandre.ducarre@my-digital-school.org",
+        "birthDate": "2000-11-09",
+        "gender": "male",
+        "avatarUrl": "https://trombi-mds.mathieutu.dev/pictures/b3_design/ducarre_alexandre.jpg"
+    }
+]
