@@ -9,7 +9,10 @@ npm i
 yarn install
 ```
 
-### Compiles and hot-reloads for development
+### Project Launch
+```
+yarn express
+```
 ```
 yarn serve
 ```
